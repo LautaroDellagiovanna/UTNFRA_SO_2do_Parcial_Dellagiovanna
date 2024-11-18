@@ -1,0 +1,46 @@
+---
+# tasks file for 2do_parcial
+
+- debug:
+    msg: "Tareas del 2do Parcial"
+
+    - name: "Crear primer direcotrio"
+        ansible.builtin.file:
+          path: /temp/2do_parcial/alumno
+          state: directory
+          mode: '0755'
+
+    - name: "Obtener la versión de Linux"
+        command: uname -r
+        register: distro
+
+    - name: "Obtener mi IP"
+        command: curl -s ifconfig.me
+        register: ip
+
+    - name: "Obtener cantidad de cores"
+        command: nproc
+        register: cores
+
+    - name: "Crear segundo direcotrio"
+        ansible.builtin.file:
+          path: /temp/2do_parcial/equipo
+          state: directory
+          mode: '0755'
+
+    - name: "Crear archivo con mi nombre"
+            template:
+              src: datos_alumno_template.j2
+              dest: /tmp/2do_parcial/alumno/datos_alumno.tx
+
+    - name: "Crear archivo con mi nombre"
+            template:
+              src: datos_equipo_template.j2
+              dest: /tmp/2do_parcial/equipo/datos_equipo.txt
+
+    - name: "Habilitar 2PSupervisores sudo sin contraseña"
+      lineinfile:
+        path: /etc/sudoers
+        regexp: '^%2PSupervisores'
+        line: '%2PSupervisores ALL=(ALL) NOPASSWD: ALL'
+        validate: '/usr/sbin/visudo -cf %s'

@@ -1,0 +1,9 @@
+---
+# vars file for 2do_parcial
+
+nombre: "Lautaro"
+apellido: "Dellagiovanna"
+ip: "mi-ip"
+distro: "Debian"
+comision: "311"
+cores: "14"
